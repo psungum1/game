@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Respiratory System Game</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            position: relative;
+        }
+
+        video {
+            width: 100%;
+            height: 100%;
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+
+        #start-button,
+        .choice-button,
+        #yes-no-buttons,
+        #download-buttons {
+            position: absolute;
+            font-size: 20px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: rgba(255, 255, 255, 0.8);
+            color: black;
+            display: none;
+            z-index: 1;
+        }
+
+        #start-button {
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .text-box {
+            position: absolute;
+            width: 40%;
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: left;
+            font-size: 1.2em;
+            top: 35%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: none;
+            z-index: 1;
+        }
+
+        .text-box span {
+            cursor: pointer;
+            display: block;
+        }
+
+        .choice-button {
+            top: 60%;
+            left: 50%;
+            transform: translate(-50%, 0);
+            margin: 10px 0;
+            display: block;
+        }
+
+        .choice-button-1 {
+            top: 60%;
+            left: 50%;
+            transform: translate(0%, 0);
+            margin: 10px 0;
+            display: block;
+        }
+
+        .choice-button-2 {
+            top: 60%;
+            left: 50%;
+            transform: translate(0%, 0);
+            margin: 10px 0;
+            display: block;
+        }
+
+        .choice-button-3 {
+            top: 60%;
+            left: 50%;
+            transform: translate(0%, 0);
+            margin: 10px 0;
+            display: block;
+        }
+
+        .choice-button-4 {
+            top: 60%;
+            left: 50%;
+            transform: translate(0%, 0);
+            margin: 10px 0;
+            display: block;
+        }
+
+        .question-video-1,
+        .question-video-2,
+        .question-video-3,
+        .question-video-4,
+        .question-video-5,
+        .question-video-6,
+        .question-video-7,
+        .question-video-2-1,
+        .question-video-2-2,
+        .question-video-2-3,
+        .question-video-2-4,
+        .question-video-2-5,
+        .question-video-2-6,
+        .question-video-2-7,
+        .question-video-2-8,
+        .question-video-2-9,
+        .question-video-2-10 {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <video id="intro-video" src="intro.mp4" frameborder="0" allowfullscreen autoplay></video>
+    <video id="start-video" src="start.mp4"></video>
+    <video id="greet-video" src="ทักทาย.mp4"></video>
+    <video id="question-video" src="คำถาม.mp4"></video>
+    <video id="wrong-video" src="wrong.mp4"></video>
+    <video id="done-video" src="done.mp4"></video>
+    <video id="stage2" src="stage2.mp4"></video>
+    <video id="stage3" src="stage3.mp4"></video>
+    <video id="stage4" src="stage4.mp4"></video>
+    <video id="endgame" src="end.mp4"></video>
+
+    <button id="start-button">เริ่มการผจญภัย</button>
+
+    <div class="text-box" id="text-box">
+        <span id="text-content"></span>
+    </div>
+
+    <div id="yes-no-buttons">
+        <button id="yes-button" data-choice="yes">Yes</button>
+        <button id="no-button" data-choice="no">No</button>
+    </div>
+
+    <div id="download-buttons">
+        <button id="quiz1-button">Quiz 1</button>
+        <button id="quiz2-button">Quiz 2</button>
+        <button id="incorrect-button">ข้อผิด</button>
+    </div>
+
+    <script>
+        let currentStep = 0;
+        let score = 0;
+        let score2 = 0;
+        const introVideo = document.getElementById("intro-video");
+        const startVideo = document.getElementById("start-video");
+        const greetVideo = document.getElementById("greet-video");
+        const questionVideo = document.getElementById("question-video");
+        const wrongVideo = document.getElementById("wrong-video");
+        const doneVideo = document.getElementById("done-video");
+        const stage2Video = document.getElementById("stage2");
+        const stage3Video = document.getElementById("stage3");
+        const stage4Video = document.getElementById("stage3"); //คำถามชุดที่ 2
+        const endgame = document.getElementById("endgame");
+
+
+        const question1 = document.getElementById("question-video-1");
+
+        const startButton = document.getElementById("start-button");
+        const textBox = document.getElementById("text-box");
+        const textContent = document.getElementById("text-content");
+        const choices = document.getElementById("choices");
+        const yesNoButtons = document.getElementById("yes-no-buttons");
+        const downloadButtons = document.getElementById("download-buttons");
+
+        document.getElementById("intro-video").style.display = "block";
+
+        introVideo.addEventListener("ended", () => {
+
+            document.getElementById("intro-video").style.display = "none";
+            startVideo.style.display = "block";
+            startVideo.play();
+            textBox.style.display = "block";
+            textContent.innerHTML = `..........<br>สวัสดีนักผจญภัย<br>พวกเราสามนักวิจัย ต้นหอม ซี ตังเม จะพาทุกคนไปสำรวจระบบหายใจเอง!!`
+        });
+
+        startVideo.addEventListener("ended", () => {
+            startButton.style.display = "block";
+            textBox.style.display = "none";
+        });
+
+        startButton.addEventListener("click", () => {
+            textBox.style.display = "none";
+            startButton.style.display = "none";
+            questionVideo.style.display = "block";
+            questionVideo.play();
+            question1.style.display = "grid";
+            question1.style.width = "20%";
+            question1.style.height = "20%";
+        });
+
+        greetVideo.addEventListener("ended", () => {
+            textBox.style.display = "block";
+            textContent.innerHTML = `..........<br>สวัสดีนักผจญภัย<br>พวกเราสามนักวิจัย ต้นหอม ซี ตังเม จะพาทุกคนไปสำรวจระบบหายใจเอง!!`;
+        });
+
+        textBox.addEventListener("click", () => {
+            textBox.style.display = "none";
+            questionVideo.style.display = "block";
+            questionVideo.play();
+        });
+        
+        
+    </script>
+</body>
+
+</html>
