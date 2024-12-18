@@ -48,7 +48,12 @@
             left: 50%;
             transform: translate(-50%, -50%);
         }
-
+        #test-button {
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: none;
+        }
         .text-box {
             position: absolute;
             width: 40%;
@@ -143,22 +148,19 @@
     <video id="stage3" src="stage3.mp4"></video>
     <video id="stage4" src="stage4.mp4"></video>
     <video id="endgame" src="end.mp4"></video>
+    <video id="detail" src="detail.mp4"></video>
 
     <button id="start-button">เริ่มการผจญภัย</button>
-
+    <button id="test-button">เริ่มทำแบบทดสอบ</button>
     <div class="text-box" id="text-box">
         <span id="text-content"></span>
     </div>
+    <div id="question-video-1" class="question-video-1">
 
-    <div id="yes-no-buttons">
-        <button id="yes-button" data-choice="yes">Yes</button>
-        <button id="no-button" data-choice="no">No</button>
-    </div>
+        <button id="ansq1-1" class="choice-button-1" data-choice="1">1) ฉันเก่งเรื่องระบบหายใจ</button>
+        <button id="ansq1-2" class="choice-button-2" data-choice="2">2) ฉันเข้าใจมันอยู่นะ</button>
+        <button id="ansq1-3" class="choice-button-3" data-choice="3">3) ฉันไม่ค่อยเข้าใจมัน</button>
 
-    <div id="download-buttons">
-        <button id="quiz1-button">Quiz 1</button>
-        <button id="quiz2-button">Quiz 2</button>
-        <button id="incorrect-button">ข้อผิด</button>
     </div>
 
     <script>
@@ -175,11 +177,16 @@
         const stage3Video = document.getElementById("stage3");
         const stage4Video = document.getElementById("stage3"); //คำถามชุดที่ 2
         const endgame = document.getElementById("endgame");
-
+        const detail = document.getElementById("detail");
 
         const question1 = document.getElementById("question-video-1");
+        const ansq11 = document.getElementById("ansq1-1");
+        const ansq12 = document.getElementById("ansq1-2");
+        const ansq13 = document.getElementById("ansq1-3");
 
         const startButton = document.getElementById("start-button");
+        const startTest = document.getElementById("test-button");
+
         const textBox = document.getElementById("text-box");
         const textContent = document.getElementById("text-content");
         const choices = document.getElementById("choices");
@@ -187,21 +194,27 @@
         const downloadButtons = document.getElementById("download-buttons");
 
         document.getElementById("intro-video").style.display = "block";
-
         introVideo.addEventListener("ended", () => {
-
             document.getElementById("intro-video").style.display = "none";
             startVideo.style.display = "block";
             startVideo.play();
             textBox.style.display = "block";
             textContent.innerHTML = `..........<br>สวัสดีนักผจญภัย<br>พวกเราสามนักวิจัย ต้นหอม ซี ตังเม จะพาทุกคนไปสำรวจระบบหายใจเอง!!`
         });
-
         startVideo.addEventListener("ended", () => {
             startButton.style.display = "block";
             textBox.style.display = "none";
         });
+        greetVideo.addEventListener("ended", () => {
+            textBox.style.display = "block";
+            textContent.innerHTML = `..........<br>สวัสดีนักผจญภัย<br>พวกเราสามนักวิจัย ต้นหอม ซี ตังเม จะพาทุกคนไปสำรวจระบบหายใจเอง!!`;
+        });
 
+        textBox.addEventListener("click", () => {
+            textBox.style.display = "none";
+            questionVideo.style.display = "block";
+            questionVideo.play();
+        });
         startButton.addEventListener("click", () => {
             textBox.style.display = "none";
             startButton.style.display = "none";
@@ -216,14 +229,48 @@
             textBox.style.display = "block";
             textContent.innerHTML = `..........<br>สวัสดีนักผจญภัย<br>พวกเราสามนักวิจัย ต้นหอม ซี ตังเม จะพาทุกคนไปสำรวจระบบหายใจเอง!!`;
         });
-
-        textBox.addEventListener("click", () => {
-            textBox.style.display = "none";
-            questionVideo.style.display = "block";
+        ansq11.addEventListener("click", () => {
             questionVideo.play();
+            questionVideo.style.display = "block";
+            question1.style.display = "none";
+            doneVideo.play();
+            doneVideo.style.display = "block";
+            window.open('https://docs.google.com/forms/d/e/1FAIpQLScofG3lgiMe6QvD9iEBV9zSM-0NtffrBWgKK5whkh-BROCo7g/viewform', '_blank');
+            detail.style.display = "block";
+            detail.play();
         });
-        
-        
+        ansq12.addEventListener("click", () => {
+            questionVideo.play();
+            questionVideo.style.display = "block";
+            question1.style.display = "none";
+            doneVideo.play();
+            doneVideo.style.display = "block";
+            window.open('https://docs.google.com/forms/d/e/1FAIpQLScofG3lgiMe6QvD9iEBV9zSM-0NtffrBWgKK5whkh-BROCo7g/viewform', '_blank');
+            detail.style.display = "block";
+            detail.play();
+        });
+        ansq13.addEventListener("click", () => {
+            questionVideo.play();
+            questionVideo.style.display = "block";
+            question1.style.display = "none";
+            doneVideo.play();
+            doneVideo.style.display = "block";
+            window.open('https://docs.google.com/forms/d/e/1FAIpQLScofG3lgiMe6QvD9iEBV9zSM-0NtffrBWgKK5whkh-BROCo7g/viewform', '_blank');
+            detail.style.display = "block";
+            detail.play();
+        });
+
+        detail.addEventListener("ended", () => {
+            startTest.style.display="block"
+        });
+        startTest.addEventListener("click", () => {
+            window.open('https://docs.google.com/forms/d/e/1FAIpQLSctIxuzQqSnu4dKdXkzttgh4fSDUhahcE9Iy0t5ks0LlyYWnw/viewform', '_blank');
+            startTest.style.display = "none";
+            startVideo.style.display = "none";
+            endgame.style.display="block"
+            endgame.style.zIndex=500
+            endgame.play();
+        });
     </script>
 </body>
 
